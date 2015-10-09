@@ -24,6 +24,7 @@
 #include "qSlicerPairwiseMetricsModuleExport.h"
 
 class qSlicerPairwiseMetricsModuleWidgetPrivate;
+class vtkMRMLLabelMapVolumeNode;
 class vtkMRMLNode;
 
 /// \ingroup Slicer_QtModules_ExtensionTemplate
@@ -39,7 +40,14 @@ public:
   virtual ~qSlicerPairwiseMetricsModuleWidget();
 
 public slots:
-
+  void onMRMLSceneChanged(vtkMRMLScene* scene);
+  void onNumberOfWidgetsChanged(int nWidgets);
+  void onMetricChanged();
+  void onComputeClicked();
+  void computeDiceMetric();
+  void computeHausdorffMetric();
+  void computeAMDMetric();
+  void setLabelMapToLogic();
 
 protected:
   QScopedPointer<qSlicerPairwiseMetricsModuleWidgetPrivate> d_ptr;

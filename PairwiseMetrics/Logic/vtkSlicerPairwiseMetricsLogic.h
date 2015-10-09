@@ -24,16 +24,23 @@
 #ifndef __vtkSlicerPairwiseMetricsLogic_h
 #define __vtkSlicerPairwiseMetricsLogic_h
 
+// VTK includes
+#include <vtkImageData.h>
+#include <vtkMultiThreader.h>
+
 // Slicer includes
 #include "vtkSlicerModuleLogic.h"
 
 // MRML includes
+#include "vtkMRMLLabelMapVolumeNode.h"
 
 // STD includes
 #include <cstdlib>
 
 #include "vtkSlicerPairwiseMetricsModuleLogicExport.h"
 
+class vtkImageData;
+class vtkMultiThreader;
 
 /// \ingroup Slicer_QtModules_ExtensionTemplate
 class VTK_SLICER_PAIRWISEMETRICS_MODULE_LOGIC_EXPORT vtkSlicerPairwiseMetricsLogic :
@@ -45,6 +52,10 @@ public:
   vtkTypeMacro(vtkSlicerPairwiseMetricsLogic, vtkSlicerModuleLogic);
   void PrintSelf(ostream& os, vtkIndent indent);
 
+  void ClearLabelMaps();
+  void AddLabelMap(const vtkMRMLLabelMapVolumeNode* labelmap);
+  void CalculateDiceCoefficients();
+
 protected:
   vtkSlicerPairwiseMetricsLogic();
   virtual ~vtkSlicerPairwiseMetricsLogic();
@@ -55,10 +66,20 @@ protected:
   virtual void UpdateFromMRMLScene();
   virtual void OnMRMLSceneNodeAdded(vtkMRMLNode* node);
   virtual void OnMRMLSceneNodeRemoved(vtkMRMLNode* node);
+
+  VTK_THREAD_RETURN_TYPE ThreadedDice(void* arg);
+  int GetNumberOfPixels(vtkImageData* imData);
+  int CalculateIntersection(vtkImageData* label1, vtkImageData* label2);
+
 private:
 
   vtkSlicerPairwiseMetricsLogic(const vtkSlicerPairwiseMetricsLogic&); // Not implemented
   void operator=(const vtkSlicerPairwiseMetricsLogic&); // Not implemented
+
+  static std::vector<const vtkMRMLLabelMapVolumeNode*> LabelMaps;
+  static double** ResultsArray;
+  vtkMultiThreader* Threader;
+
 };
 
 #endif

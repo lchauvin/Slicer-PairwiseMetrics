@@ -62,7 +62,7 @@ qSlicerPairwiseMetricsModule::~qSlicerPairwiseMetricsModule()
 //-----------------------------------------------------------------------------
 QString qSlicerPairwiseMetricsModule::helpText() const
 {
-  return "This is a loadable module that can be bundled in an extension";
+  return "This extension compute pairwise metrics such as Dice coefficient, Generale Hausdorff distance and Average Minimum Distance using multiple threads";
 }
 
 //-----------------------------------------------------------------------------
@@ -75,7 +75,7 @@ QString qSlicerPairwiseMetricsModule::acknowledgementText() const
 QStringList qSlicerPairwiseMetricsModule::contributors() const
 {
   QStringList moduleContributors;
-  moduleContributors << QString("John Doe (AnyWare Corp.)");
+  moduleContributors << QString("Laurent Chauvin (BWH), Sonia Pujol (BWH)");
   return moduleContributors;
 }
 
@@ -88,7 +88,7 @@ QIcon qSlicerPairwiseMetricsModule::icon() const
 //-----------------------------------------------------------------------------
 QStringList qSlicerPairwiseMetricsModule::categories() const
 {
-  return QStringList() << "Examples";
+  return QStringList() << "Quantification";
 }
 
 //-----------------------------------------------------------------------------
